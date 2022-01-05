@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="swagger-ui/swagger-ui.css" />
+</head>
+
+<body>
+    <div id="swagger-ui"></div>
+    <script src="swagger-ui/swagger-ui-standalone-preset.js"></script>
+    <script src="swagger-ui/swagger-ui-bundle.js"></script>
+    <script>
+        function Resources() {
+            let urls=[]
+
+            this.toObject = function () {
+                return urls
+            }
+            this.add = function (url, name) {
+                urls.push({
+                    "url": url,
+                    "name": name
+                })
+            }
+        }
+        let resources = new Resources()
+        // add your resources here
+        resources.add("resources/swagger.json", "Petstore")
+
+
+        window.onload = () => {
+            let ui = SwaggerUIBundle({
+                urls: resources.toObject(),
+                dom_id: "#swagger-ui",
+                deepLinking: true,
+                // docExpansion: 'none',
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+
+                layout: "StandaloneLayout"
+
+            })
+
+            window.ui = ui
+        }
+    </script>
+</body>
+
+</html>
